@@ -9,4 +9,5 @@ public class Pelicula {
 	private int año;
 	private float presupuesto;
 	private String productora;
+	private String genero;
 }
