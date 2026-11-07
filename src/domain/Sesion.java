@@ -2,6 +2,8 @@ package domain;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sesion {
 	private String id;
@@ -10,6 +12,8 @@ public class Sesion {
 	private LocalDate fecha;
 	private LocalTime hora;
 	private double precio;
+	private List<Butaca> butacasOcupadas = new ArrayList<>();
+	//Luego podriamos añadir no disponibles o butacas especiales para minusvalidos
 
 	public Sesion() {
 		super();
@@ -23,6 +27,10 @@ public class Sesion {
 		this.fecha = fecha;
 		this.hora = hora;
 		this.precio = precio;
+	}
+
+	public List<Butaca> getButacasOcupadas() {
+		return butacasOcupadas;
 	}
 
 	public String getId() {

@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -114,12 +117,14 @@ public class VentanaSesiones extends JFrame {
 				return false;
 			}
 		};
-
+		
+		List<Sesion> sesionesPelicula = new ArrayList<>();
 		for (Sesion s : sesiones) {
 			if (s.getPelicula().getNombre().equals(pelicula.getNombre())) {
+				sesionesPelicula.add(s);
 				modelo.addRow(new Object[] {
 						s.getHora(),
-						s.getSala(),
+						"Sala " + s.getSala().getNumero(),
 						s.getPrecio() + " €"
 				});
 			}
@@ -131,7 +136,18 @@ public class VentanaSesiones extends JFrame {
 			JTable tabla = new JTable(modelo);
 			tabla.setRowHeight(30);
 			tabla.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
-			// Aquí más adelante se puede abrir la selección de butacas al elegir una fila
+			
+			// Butacas de cada Sesion
+			tabla.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int fila = tabla.getSelectedRow();
+					if (fila!= -1) {
+						new VentanaButacas(sesionesPelicula.get(fila)).setVisible(true);
+					}
+				}
+			});
+			
 			panel.add(new JScrollPane(tabla), BorderLayout.CENTER);
 		}
 

@@ -20,6 +20,12 @@ public class Sala {
 		this.filas = filas;
 		this.butacasPorFila = butacasPorFila;
 		this.butacas = new ArrayList<>();
+		// Crea Todas las Butacas
+		for (int f = 1; f <= filas; f++) {
+			for (int n = 1; n <= butacasPorFila; n++) {
+				butacas.add(new Butaca(this, f, n));
+			}
+		}
 	}
 
 	public int getNumero() {
