@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pelicula {
@@ -7,24 +8,23 @@ public class Pelicula {
 	private String nombre;
 	private String descripcion;
 	private String director;
-	private List<String> actores;
+	private List<Actor> actores;
 	private int año;
-	private String productora;
+	private int duracion;          // minutos
 	private int edadMinima;
-	private float presupuesto;
 	private String genero;
-	private double puntuacion;
-	
-	
-	
-	
-	
+	private double puntuacion;     // 0-5
+	private double popularidad;
+	private List<Resena> resenas;
+
 	public Pelicula() {
 		super();
+		this.actores = new ArrayList<>();
+		this.resenas = new ArrayList<>();
 	}
 
-	public Pelicula(String id, String nombre, String descripcion, String director, List<String> actores, int año,
-			String productora, int edadMinima, float presupuesto, String genero, double puntuacion) {
+	public Pelicula(String id, String nombre, String descripcion, String director, List<Actor> actores, int año,
+			int duracion, int edadMinima, String genero, double puntuacion, double popularidad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -32,11 +32,12 @@ public class Pelicula {
 		this.director = director;
 		this.actores = actores;
 		this.año = año;
-		this.productora = productora;
+		this.duracion = duracion;
 		this.edadMinima = edadMinima;
-		this.presupuesto = presupuesto;
 		this.genero = genero;
 		this.puntuacion = puntuacion;
+		this.popularidad = popularidad;
+		this.resenas = new ArrayList<>();
 	}
 
 	public String getId() {
@@ -71,11 +72,11 @@ public class Pelicula {
 		this.director = director;
 	}
 
-	public List<String> getActores() {
+	public List<Actor> getActores() {
 		return actores;
 	}
 
-	public void setActores(List<String> actores) {
+	public void setActores(List<Actor> actores) {
 		this.actores = actores;
 	}
 
@@ -87,12 +88,12 @@ public class Pelicula {
 		this.año = año;
 	}
 
-	public String getProductora() {
-		return productora;
+	public int getDuracion() {
+		return duracion;
 	}
 
-	public void setProductora(String productora) {
-		this.productora = productora;
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
 	}
 
 	public int getEdadMinima() {
@@ -101,14 +102,6 @@ public class Pelicula {
 
 	public void setEdadMinima(int edadMinima) {
 		this.edadMinima = edadMinima;
-	}
-
-	public float getPresupuesto() {
-		return presupuesto;
-	}
-
-	public void setPresupuesto(float presupuesto) {
-		this.presupuesto = presupuesto;
 	}
 
 	public String getGenero() {
@@ -126,10 +119,27 @@ public class Pelicula {
 	public void setPuntuacion(double puntuacion) {
 		this.puntuacion = puntuacion;
 	}
-	
-	
-	
-	
-	
-	
+
+	public double getPopularidad() {
+		return popularidad;
+	}
+
+	public void setPopularidad(double popularidad) {
+		this.popularidad = popularidad;
+	}
+
+	public List<Resena> getResenas() {
+		return resenas;
+	}
+
+	public void setResenas(List<Resena> resenas) {
+		this.resenas = resenas;
+	}
+
+	@Override
+	public String toString() {
+		return "Pelicula [id=" + id + ", nombre=" + nombre + ", director=" + director + ", año=" + año
+				+ ", duracion=" + duracion + ", edadMinima=" + edadMinima + ", genero=" + genero
+				+ ", puntuacion=" + puntuacion + ", popularidad=" + popularidad + "]";
+	}
 }

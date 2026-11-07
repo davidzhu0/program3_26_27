@@ -36,6 +36,11 @@ public class Usuario {
 	public void setSocio(Socio socio) {
 		this.socio = socio;
 	}
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", nombre=" + nombre + ", correo=" + correo + ", socio=" + socio
+				+ "]";
+	}
 	
 	
 
