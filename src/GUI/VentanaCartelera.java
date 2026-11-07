@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import domain.Pelicula;
 import domain.Sesion;
@@ -36,6 +35,7 @@ public class VentanaCartelera extends JFrame {
 
 	private List<Pelicula> peliculas;
 	private List<Sesion> sesiones;
+	private VentanaPerfil perfil;
 
 	public VentanaCartelera(List<Pelicula> peliculas, List<Sesion> sesiones) {
 		this.peliculas = peliculas;
@@ -70,24 +70,18 @@ public class VentanaCartelera extends JFrame {
 	}
 
 	private JPanel crearBarraSuperior() {
-		JPanel barra = new JPanel(new BorderLayout());
-		barra.setBackground(new Color(40, 40, 40));
-		barra.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		Header header = new Header();
 
-		JLabel lblCine = new JLabel("Cine");
-		lblCine.setForeground(Color.WHITE);
-		lblCine.setFont(new Font("Arial", Font.BOLD, 20));
-		barra.add(lblCine, BorderLayout.WEST);
+		header.getbPerfil().addActionListener(e -> {
+			if (perfil == null) {
+				new VentanaAcceso(this).setVisible(true);
+			} else {
+				perfil.setVisible(true);
+			}
+			setVisible(false);
+		});
 
-		JPanel menu = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		menu.setOpaque(false);
-		menu.add(new JButton("Cartelera"));
-		menu.add(new JButton("Mejor valoradas"));
-		menu.add(new JButton("Reseñas"));
-		menu.add(new JButton("Mi perfil"));
-		barra.add(menu, BorderLayout.EAST);
-
-		return barra;
+		return header;
 	}
 
 	private JPanel crearTarjeta(Pelicula p) {
@@ -166,14 +160,9 @@ public class VentanaCartelera extends JFrame {
 
 	    panelPeliculas.revalidate();
 	    panelPeliculas.repaint();
-	}	
+	}
+
+	public void setPerfil(VentanaPerfil perfil) {
+		this.perfil = perfil;
+	}
 }
-
-
-
-
-
-
-
-
-
