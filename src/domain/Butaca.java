@@ -1,32 +1,43 @@
 package domain;
 
 public class Butaca {
-	private String id;
+	private Sala sala;
 	private int fila;
-	private boolean disponible;
-	public Butaca(String id, int fila, boolean disponible) {
+	private int numero;
+
+	public Butaca(Sala sala, int fila, int numero) {
 		super();
-		this.id = id;
+		this.sala = sala;
 		this.fila = fila;
-		this.disponible = disponible;
+		this.numero = numero;
 	}
-	public String getId() {
-		return id;
+
+	public Sala getSala() {
+		return sala;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
 	}
+
 	public int getFila() {
 		return fila;
 	}
+
 	public void setFila(int fila) {
 		this.fila = fila;
 	}
-	public boolean isDisponible() {
-		return disponible;
+
+	public int getNumero() {
+		return numero;
 	}
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
+
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Butaca [sala=" + sala.getNumero() + ", fila=" + fila + ", numero=" + numero + "]";
+	}
 }

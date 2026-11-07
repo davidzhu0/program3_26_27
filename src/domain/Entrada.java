@@ -1,13 +1,11 @@
 package domain;
 
-import java.nio.BufferUnderflowException;
-
 public class Entrada {
 	private Usuario usuario;
 	private Sesion sesion;
 	private Butaca butaca;
-	private int precio;
-	public Entrada(Usuario usuario, Sesion sesion, Butaca butaca, int precio) {
+	private float precio;
+	public Entrada(Usuario usuario, Sesion sesion, Butaca butaca, float precio) {
 		super();
 		this.usuario = usuario;
 		this.sesion = sesion;
@@ -32,10 +30,14 @@ public class Entrada {
 	public void setButaca(Butaca butaca) {
 		this.butaca = butaca;
 	}
-	public int getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
-	public void setPrecio(int precio) {
+	@Override
+	public String toString() {
+		return "Entrada [usuario=" + usuario + ", sesion=" + sesion + ", butaca=" + butaca + ", precio=" + precio + "]";
+	}
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 	

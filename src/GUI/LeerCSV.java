@@ -98,23 +98,6 @@ public static void main(String[] args) {
 	System.out.println("\n" + p);
 	System.out.println("\n" + p1);
 
-	// 3. Sus actores
-	System.out.println("\nActores:");
-	for (Actor a : p.getActores()) {
-		System.out.println("  " + a.getNombre());
-	}
-
-	// 4. Sus reseñas
-	System.out.println("\nReseñas (" + p.getResenas().size() + "):");
-	for (Resena r : p.getResenas()) {
-		System.out.println("  " + r.getUsuario() + ": " + r.getTexto());
-	}
-
-	// 5. Un actor con todas sus películas
-	Actor tom = lector.getActores().get("Tom Hanks");
-	System.out.println("\nPelículas de Tom Hanks:");
-	for (Pelicula peli : tom.getPeliculas()) {
-		System.out.println("  " + peli.getNombre());
-	}
+	
 }
 }
