@@ -23,6 +23,14 @@ import domain.Sesion;
 
 
 public class VentanaCartelera extends JFrame {
+	
+	private static final int PELIS_POR_PAGINA = 12;
+	private int paginaActual = 0;
+
+	private JPanel panelPeliculas;
+	private JLabel lblPagina;
+	private JButton btnAnterior;
+	private JButton btnSiguiente;
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,19 +56,17 @@ public class VentanaCartelera extends JFrame {
 		lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
 		contenido.add(lblTitulo, BorderLayout.NORTH);
 
-		JPanel panelPeliculas = new JPanel(new GridLayout(0, 4, 15, 15));
-		for (Pelicula p : this.peliculas) {
-			panelPeliculas.add(crearTarjeta(p));
-		}
+		panelPeliculas = new JPanel(new GridLayout(0, 4, 15, 15));
 
 		JPanel envoltorio = new JPanel(new BorderLayout());
 		envoltorio.add(panelPeliculas, BorderLayout.NORTH);
+		contenido.add(envoltorio, BorderLayout.CENTER);
 
-		JScrollPane scroll = new JScrollPane(envoltorio);
-		scroll.setBorder(null);
-		contenido.add(scroll, BorderLayout.CENTER);
+		contenido.add(crearPanelPaginas(), BorderLayout.SOUTH);
 
 		add(contenido, BorderLayout.CENTER);
+
+		mostrarPagina();
 	}
 
 	private JPanel crearBarraSuperior() {
@@ -118,6 +124,49 @@ public class VentanaCartelera extends JFrame {
 		ventana.setVisible(true);
 		setVisible(false);
 	}
+	private JPanel crearPanelPaginas() {
+	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
+
+	    btnAnterior = new JButton("< Anterior");
+	    btnSiguiente = new JButton("Siguiente >");
+	    lblPagina = new JLabel();
+
+	    btnAnterior.addActionListener(e -> {
+	        paginaActual--;
+	        mostrarPagina();
+	    });
+	    btnSiguiente.addActionListener(e -> {
+	        paginaActual++;
+	        mostrarPagina();
+	    });
+
+	    panel.add(btnAnterior);
+	    panel.add(lblPagina);
+	    panel.add(btnSiguiente);
+	    return panel;
+	}
+
+	private void mostrarPagina() {
+	    panelPeliculas.removeAll();
+
+	    int inicio = paginaActual * PELIS_POR_PAGINA;
+	    int fin = Math.min(inicio + PELIS_POR_PAGINA, peliculas.size());
+	    for (int i = inicio; i < fin; i++) {
+	        panelPeliculas.add(crearTarjeta(peliculas.get(i)));
+	    }
+
+	    int totalPaginas = (peliculas.size() + PELIS_POR_PAGINA - 1) / PELIS_POR_PAGINA;
+	    if (totalPaginas == 0) {
+	        totalPaginas = 1;
+	    }
+
+	    lblPagina.setText("Página " + (paginaActual + 1) + " de " + totalPaginas);
+	    btnAnterior.setEnabled(paginaActual > 0);
+	    btnSiguiente.setEnabled(paginaActual < totalPaginas - 1);
+
+	    panelPeliculas.revalidate();
+	    panelPeliculas.repaint();
+	}	
 }
 
 
