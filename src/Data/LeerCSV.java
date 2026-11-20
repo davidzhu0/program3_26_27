@@ -1,4 +1,4 @@
-package GUI;
+package Data;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,6 +1,6 @@
 //IAG (herramienta: Claude)
 //SIN CAMBIOS
-package GUI;
+package IAG;
 
 import java.io.IOException;
 import java.net.URI;
