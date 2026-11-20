@@ -12,12 +12,13 @@ import javax.swing.JPanel;
 
 import domain.Butaca;
 import domain.Sesion;
+import domain.Usuario;
 
 public class VentanaResumen extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public VentanaResumen(Sesion sesion, List<Butaca> butacas) {
+	public VentanaResumen(Sesion sesion, List<Butaca> butacas, VentanaCartelera cartelera) {
 		setTitle("Resumen de la compra");
 		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -46,8 +47,15 @@ public class VentanaResumen extends JFrame {
 
 		JButton btnConfirmar = new JButton("Confirmar compra");
 		btnConfirmar.addActionListener(e -> {
+			Usuario usuario = (cartelera != null) ? cartelera.getUsuario() : null;
+			if (usuario == null) {
+				JOptionPane.showMessageDialog(this, "Inicia sesión o crea una cuenta para reservar.");
+				new VentanaAcceso(cartelera, this).setVisible(true);
+				setVisible(false);
+				return;
+			}
 			sesion.getButacasOcupadas().addAll(butacas);
-			JOptionPane.showMessageDialog(this, "Compra realizada");
+			JOptionPane.showMessageDialog(this, "Compra realizada a nombre de " + usuario.getNombre() + ".");
 			dispose();
 		});
 		add(btnConfirmar, BorderLayout.SOUTH);

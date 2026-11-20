@@ -26,6 +26,7 @@ public class VentanaAcceso extends JFrame {
 	private static List<Usuario> usuarios = new ArrayList<>();
 
 	private VentanaCartelera cartelera;
+	private JFrame volverA;
 
 	private JTextField txLogin = new JTextField();
 	private JPasswordField psLogin = new JPasswordField();
@@ -36,7 +37,12 @@ public class VentanaAcceso extends JFrame {
 	private JPasswordField psRepetir = new JPasswordField();
 
 	public VentanaAcceso(VentanaCartelera cartelera) {
+		this(cartelera, null);
+	}
+
+	public VentanaAcceso(VentanaCartelera cartelera, JFrame volverA) {
 		this.cartelera = cartelera;
+		this.volverA = volverA;
 
 		setTitle("Cine - Acceso");
 		setSize(950, 600);
@@ -130,9 +136,14 @@ public class VentanaAcceso extends JFrame {
 			if (u.getNombre().equals(usuario) && u.getContrasena().equals(contrasena)) {
 				VentanaPerfil perfil = new VentanaPerfil(cartelera, u);
 				if (cartelera != null) {
+					cartelera.setUsuario(u);
 					cartelera.setPerfil(perfil);
 				}
-				perfil.setVisible(true);
+				if (volverA != null) {
+					volverA.setVisible(true);
+				} else {
+					perfil.setVisible(true);
+				}
 				dispose();
 				return;
 			}

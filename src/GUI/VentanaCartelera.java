@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import domain.Pelicula;
 import domain.Sesion;
+import domain.Usuario;
 
 
 public class VentanaCartelera extends JFrame {
@@ -36,6 +37,7 @@ public class VentanaCartelera extends JFrame {
 	private List<Pelicula> peliculas;
 	private List<Sesion> sesiones;
 	private VentanaPerfil perfil;
+	private Usuario usuario;
 
 	public VentanaCartelera(List<Pelicula> peliculas, List<Sesion> sesiones) {
 		this.peliculas = peliculas;
@@ -73,11 +75,7 @@ public class VentanaCartelera extends JFrame {
 		Header header = new Header();
 
 		header.getbPerfil().addActionListener(e -> {
-			if (perfil == null) {
-				new VentanaAcceso(this).setVisible(true);
-			} else {
-				perfil.setVisible(true);
-			}
+			abrirPerfil();
 			setVisible(false);
 		});
 
@@ -164,5 +162,24 @@ public class VentanaCartelera extends JFrame {
 
 	public void setPerfil(VentanaPerfil perfil) {
 		this.perfil = perfil;
+	}
+
+	public void abrirPerfil() {
+		if (usuario == null) {
+			new VentanaAcceso(this).setVisible(true);
+		} else {
+			if (perfil == null) {
+				perfil = new VentanaPerfil(this, usuario);
+			}
+			perfil.setVisible(true);
+		}
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }

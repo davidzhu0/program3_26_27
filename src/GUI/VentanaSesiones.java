@@ -28,9 +28,9 @@ public class VentanaSesiones extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private Pelicula pelicula;
-	private JFrame ventanaCartelera;
+	private VentanaCartelera ventanaCartelera;
 
-	public VentanaSesiones(Pelicula pelicula, List<Sesion> sesiones, JFrame ventanaCartelera) {
+	public VentanaSesiones(Pelicula pelicula, List<Sesion> sesiones, VentanaCartelera ventanaCartelera) {
 		this.pelicula = pelicula;
 		this.ventanaCartelera = ventanaCartelera;
 
@@ -59,28 +59,15 @@ public class VentanaSesiones extends JFrame {
 	}
 
 	private JPanel crearBarraSuperior() {
-		JPanel barra = new JPanel(new BorderLayout());
-		barra.setBackground(new Color(40, 40, 40));
-		barra.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		Header header = new Header();
 
-		JLabel lblCine = new JLabel("Cine");
-		lblCine.setForeground(Color.WHITE);
-		lblCine.setFont(new Font("Arial", Font.BOLD, 20));
-		barra.add(lblCine, BorderLayout.WEST);
+		header.getbCartelera().addActionListener(e -> volverACartelera());
+		header.getbPerfil().addActionListener(e -> {
+			ventanaCartelera.abrirPerfil();
+			dispose();
+		});
 
-		JPanel menu = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		menu.setOpaque(false);
-
-		JButton btnCartelera = new JButton("Cartelera");
-		btnCartelera.addActionListener(e -> volverACartelera());
-
-		menu.add(btnCartelera);
-		menu.add(new JButton("Mejor valoradas"));
-		menu.add(new JButton("Reseñas"));
-		menu.add(new JButton("Mi perfil"));
-		barra.add(menu, BorderLayout.EAST);
-
-		return barra;
+		return header;
 	}
 
 	private JPanel crearPanelPelicula() {
@@ -143,7 +130,7 @@ public class VentanaSesiones extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					int fila = tabla.getSelectedRow();
 					if (fila!= -1) {
-						new VentanaButacas(sesionesPelicula.get(fila)).setVisible(true);
+						new VentanaButacas(sesionesPelicula.get(fila), ventanaCartelera).setVisible(true);
 					}
 				}
 			});

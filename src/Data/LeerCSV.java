@@ -88,11 +88,11 @@ public static void main(String[] args) {
 
 	List<Pelicula> peliculas = lector.getPeliculas();
 
-	// 1. ¿Cuántas se han cargado?
+	
 	System.out.println("Películas: " + peliculas.size());
 	System.out.println("Actores: " + lector.getActores().size());
 
-	// 2. Primera película con sus datos
+	
 	Pelicula p = peliculas.get(0);
 	Pelicula p1 = peliculas.get(2);
 	System.out.println("\n" + p);

@@ -21,10 +21,12 @@ public class VentanaButacas extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private Sesion sesion;
+	private VentanaCartelera cartelera;
 	private List<Butaca> seleccionadas = new ArrayList<>();
 
-	public VentanaButacas(Sesion sesion) {
+	public VentanaButacas(Sesion sesion, VentanaCartelera cartelera) {
 		this.sesion = sesion;
+		this.cartelera = cartelera;
 		Sala sala = sesion.getSala();
 
 		setTitle("Elegir butacas - " + sesion.getPelicula().getNombre());
@@ -64,7 +66,7 @@ public class VentanaButacas extends JFrame {
 		JButton btnContinuar = new JButton("Continuar");
 		btnContinuar.addActionListener(e -> {
 			if (!seleccionadas.isEmpty()) {
-				new VentanaResumen(sesion, seleccionadas).setVisible(true);
+				new VentanaResumen(sesion, seleccionadas, cartelera).setVisible(true);
 				dispose();
 			}
 		});

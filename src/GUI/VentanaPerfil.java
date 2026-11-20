@@ -78,14 +78,20 @@ public class VentanaPerfil extends JFrame {
 		bCerrar.addActionListener(e -> {
 			if (cartelera != null) {
 				cartelera.setPerfil(null);
+				cartelera.setUsuario(null);
 				cartelera.setVisible(true);
 			}
 			dispose();
 		});
 
-		JPanel pDatos = new JPanel(new GridLayout(4, 1, 0, 12));
-		pDatos.setPreferredSize(new Dimension(260, 200));
+		JLabel lbUsuario = new JLabel("Usuario");
+		JLabel lbEmail = new JLabel("Correo");
+
+		JPanel pDatos = new JPanel(new GridLayout(6, 1, 0, 6));
+		pDatos.setPreferredSize(new Dimension(260, 230));
+		pDatos.add(lbUsuario);
 		pDatos.add(txUsuario);
+		pDatos.add(lbEmail);
 		pDatos.add(txEmail);
 		pDatos.add(bCambiar);
 		pDatos.add(bCerrar);
@@ -131,8 +137,9 @@ public class VentanaPerfil extends JFrame {
 		JPanel pBotones = new JPanel(new GridLayout(1, 4, 15, 0));
 		ButtonGroup bgTipo = new ButtonGroup();
 		String[] tipos = { "Normal", "Niño", "Senior", "Estudiante" };
-		for (String tipo : tipos) {
-			JToggleButton bTipo = new JToggleButton("<html><center>" + tipo + "<br>- %</center></html>");
+		int[] descuentos = { 0, 20, 30, 15 };
+		for (int i = 0; i < tipos.length; i++) {
+			JToggleButton bTipo = new JToggleButton("<html><center>" + tipos[i] + "<br>" + (descuentos[i] == 0 ? "0" : "-" + descuentos[i]) + " %</center></html>");
 			bTipo.setPreferredSize(new Dimension(0, 70));
 			bgTipo.add(bTipo);
 			pBotones.add(bTipo);
