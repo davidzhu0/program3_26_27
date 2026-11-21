@@ -5,7 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.awt.Font;
+import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,9 +29,9 @@ public class VentanaButacas extends JFrame {
 		this.sesion = sesion;
 		this.cartelera = cartelera;
 		Sala sala = sesion.getSala();
-
+		
 		setTitle("Elegir butacas - " + sesion.getPelicula().getNombre());
-		setSize(700, 500);
+		setSize(Math.max(700, 60 + sala.getButacasPorFila() * 44), Math.max(500, 130 + sala.getFilas() * 36));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
@@ -39,10 +40,19 @@ public class VentanaButacas extends JFrame {
 		add(lblPantalla, BorderLayout.NORTH);
 
 		// butaca por boton
-		JPanel panelButacas = new JPanel(new GridLayout(sala.getFilas(), sala.getButacasPorFila(), 5, 5));
+		JPanel panelButacas = new JPanel(new GridLayout(sala.getFilas(), sala.getButacasPorFila() + 1, 4, 4));
 		for (Butaca b : sala.getButacas()) {
-			JButton btn = new JButton(b.getFila() + "-" + b.getNumero());
+			if (b.getNumero() == 1) {
+				JLabel lbFila = new JLabel("Fila " + b.getFila(), SwingConstants.CENTER);
+				lbFila.setFont(new Font("Arial", Font.BOLD, 11));
+				panelButacas.add(lbFila);
+			}
+			JButton btn = new JButton(String.valueOf(b.getNumero()));
+			btn.setMargin(new Insets(0, 0, 0, 0));
+			btn.setFont(new Font("Arial", Font.PLAIN, 11));
+			btn.setToolTipText("Fila " + b.getFila() + ", butaca " + b.getNumero());
 			btn.setOpaque(true);
+			
 
 			if (sesion.getButacasOcupadas().contains(b)) {
 				btn.setBackground(Color.RED);

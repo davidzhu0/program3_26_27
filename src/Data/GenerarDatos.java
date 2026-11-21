@@ -92,22 +92,20 @@ public class GenerarDatos {
 		for (int semana = primeraSemana; semana < primeraSemana + semanas; semana++) {
 			List<Pelicula> cartelera = peliculasDeLaSemana(peliculas, semana);
 			LocalDate inicio = inicioSemana(semana);
-			
 			Random random = new Random(semilla + semana);
-			List<Sala> salasLibres = new ArrayList<>(salas);
-			List<Sala> salaDePelicula = new ArrayList<>();
-			for (int i = 0; i < cartelera.size(); i++) {
-				int posicion = random.nextInt(salasLibres.size());
-				salaDePelicula.add(salasLibres.get(posicion));
-				salasLibres.remove(posicion);
-			}
-			
+
 			for (int dia = 0; dia < 7; dia++) {
 				LocalDate fecha = inicio.plusDays(dia);
-				for (int i = 0; i < cartelera.size(); i++) {
-					Pelicula p = cartelera.get(i);
-					Sala sala = salas.get(i % salas.size());
-					for (LocalTime hora : horarios) {
+
+				for (LocalTime hora : horarios) {
+					List<Sala> salasLibres = new ArrayList<>(salas);
+
+					for (int i = 0; i < cartelera.size(); i++) {
+						int posicion = random.nextInt(salasLibres.size());
+						Sala sala = salasLibres.get(posicion);
+						salasLibres.remove(posicion);
+
+						Pelicula p = cartelera.get(i);
 						String id = fecha + "-S" + sala.getNumero() + "-" + hora;
 						sesiones.add(new Sesion(id, p, sala, fecha, hora, precio));
 					}
