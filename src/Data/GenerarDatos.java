@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -62,17 +61,28 @@ public class GenerarDatos {
 		return inicio.plusWeeks(semana);
 	}
 
-	public static List<Pelicula> peliculasDeLaSemana(List<Pelicula> peliculas, int semana) {
-		int semanasPorCiclo = (peliculas.size() + maxnum - 1) / maxnum;
-		int ciclo = semana / semanasPorCiclo;
-		int semanaEnCiclo = semana % semanasPorCiclo;
+	public static List<Pelicula> peliculasDeLaSemana(List<Pelicula> todas, int semana) {
+		Random random = new Random(semilla);
+		List<Pelicula> yaSalieron = new ArrayList<>();
+		List<Pelicula> cartelera = new ArrayList<>();
 
-		List<Pelicula> orden = new ArrayList<>(peliculas);
-		Collections.shuffle(orden, new Random(semilla + ciclo));
+		for (int s = 0; s <= semana; s++) {
+			cartelera = new ArrayList<>();
 
-		int desde = semanaEnCiclo * maxnum;
-		int hasta = Math.min(desde + maxnum, orden.size());
-		return new ArrayList<>(orden.subList(desde, hasta));
+			while (cartelera.size() < maxnum && cartelera.size() < todas.size()) {
+				if (yaSalieron.size() == todas.size()) {
+					yaSalieron.clear();
+				}
+
+				Pelicula p = todas.get(random.nextInt(todas.size()));
+
+				if (!yaSalieron.contains(p) && !cartelera.contains(p)) {
+					yaSalieron.add(p);
+					cartelera.add(p);
+				}
+			}
+		}
+		return cartelera;
 	}
 
 	public static List<Sesion> generarSesiones(List<Pelicula> peliculas, List<Sala> salas, LocalDate hoy, int semanas) {
@@ -82,7 +92,16 @@ public class GenerarDatos {
 		for (int semana = primeraSemana; semana < primeraSemana + semanas; semana++) {
 			List<Pelicula> cartelera = peliculasDeLaSemana(peliculas, semana);
 			LocalDate inicio = inicioSemana(semana);
-
+			
+			Random random = new Random(semilla + semana);
+			List<Sala> salasLibres = new ArrayList<>(salas);
+			List<Sala> salaDePelicula = new ArrayList<>();
+			for (int i = 0; i < cartelera.size(); i++) {
+				int posicion = random.nextInt(salasLibres.size());
+				salaDePelicula.add(salasLibres.get(posicion));
+				salasLibres.remove(posicion);
+			}
+			
 			for (int dia = 0; dia < 7; dia++) {
 				LocalDate fecha = inicio.plusDays(dia);
 				for (int i = 0; i < cartelera.size(); i++) {
